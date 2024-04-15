@@ -1,53 +1,22 @@
-const http = require('http');
-const fs = require('fs/promises');
+// Шлях + метод - це роут 
+
+const express = require('express');
+const app = express(); // додаток відловили в змінній
 
 const PORT = 5000;
 
-const requestListener = async (request, response) => {
-    const { url, method } = request;
+app.get('/', (request, response) => { // http://localhost:5000/
+    response.send('Hello world');
+}, () => {
+    console.log('first request handler');
+})
 
-    if (method === 'GET') {
-        if (url === '/index.html') { // http://localhost:5000/index.html
-            try {
-                const data = await fs.readFile('./views/index.html', 'utf-8');
-                response.statusCode = 200;
-                response.end(data);
-            } catch (error) {
-                response.statusCode = 404;
-                response.end();
-            }
-        }
-        else if (url === '/style.css') {
-            try {
-                const data = await fs.readFile('./views/style.css', 'utf-8'); // http://localhost:5000/style.css
-                response.statusCode = 200;
-                response.end(data);
-            } catch (error) {
-                response.statusCode = 404;
-                response.end();
-            }
-        }
-        else {
-            response.statusCode = 404;
-            response.end();
-        }
-    } else if (method === 'POST') {
-        if (url === '/user') {
-            let jsonString = '';
-            request.on('data', chunk => {
+app.get('/index.html', (request, response) => {
+response.status(404).send('Test /index.html');
+})
 
-                jsonString += chunk;
-            });
-            request.on('end', () => {
-                const user = JSON.parse(jsonString)
-                console.log(user);
-                response.statusCode = 200;
-                response.end();
-            })
 
-        }
-    }
-}
-const server = http.createServer(requestListener);
+app.listen(PORT, () => {
+    console.log(`Server started on port ${PORT}`);
+})
 
-server.listen(PORT);
