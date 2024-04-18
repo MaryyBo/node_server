@@ -1,9 +1,9 @@
 // Шлях + метод - це роут 
 
 const express = require('express');
-const {validateUser} = require ('./middlewares')
+const { validateUser } = require('./middlewares')
 
-const UserController = require ('./controllers/userController');
+const UserController = require('./controllers/userController');
 
 
 const app = express(); // додаток відловили в змінній
@@ -17,7 +17,11 @@ app.post('/user', bodyParser, validateUser, UserController.registerUser)
 
 // Роут на отримання всіх користувачів
 
-app.get ('/users', UserController.getAllUsers);  // Стукамо на http://localhost:5000/users
+app.get('/users', UserController.getAllUsers);  // Стукамо на http://localhost:5000/users
+
+// Роут на отримання конкретного юзера
+
+app.get('/user/:userId', UserController.getOneUser);
 
 
 

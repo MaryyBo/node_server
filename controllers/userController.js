@@ -19,3 +19,17 @@ module.exports.getAllUsers = (request, response, next) => {
     const usersArray = User.findAll()
     response.status(200).send(usersArray);
 }
+
+// Метод контроллера на отримання 1 користувача
+
+module.exports.getOneUser = (request, response, next) => {
+    const { userId } = request.params;
+    const user = User.findOne(Number(userId));
+
+    if (user) {// Якщо юзер існує, якщо він не undefined
+        response.status(200).send(user)
+    } else {
+        response.status(404).end;
+    }
+}
+
