@@ -4,6 +4,7 @@ const express = require('express');
 const { validateUser } = require('./middlewares')
 
 const UserController = require('./controllers/userController');
+const User = require('./models/user');
 
 
 const app = express(); // додаток відловили в змінній
@@ -22,6 +23,10 @@ app.get('/users', UserController.getAllUsers);  // Стукамо на http://lo
 // Роут на отримання конкретного юзера
 
 app.get('/user/:userId', UserController.getOneUser);
+
+// Роут на видалення користувача
+
+app.delete ('/user/:userId', UserController.deleteOneUser);
 
 
 

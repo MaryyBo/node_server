@@ -33,3 +33,17 @@ module.exports.getOneUser = (request, response, next) => {
     }
 }
 
+module.exports.deleteOneUser = (request, response, next) => {
+    const { userId } = request.params;
+    const user = User.findOne(Number(userId));
+
+    if (user) {
+        user.deleteUser();
+        response.status(200).send(user)
+    } else {
+        response.status(404).end;
+    }
+
+
+
+}
