@@ -21,7 +21,7 @@ class User {
     }
 
     static findAll() {
-        [...db.values()]
+        return [...db.values()]
     }
 
     deleteUser() {
