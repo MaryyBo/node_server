@@ -34,7 +34,7 @@ module.exports.getOneUser = (request, response, next) => {
 }
 
 module.exports.deleteOneUser = (request, response, next) => {
-    const { userId } = request.params;
+    const { body, userId } = request.params;
     const user = User.findOne(Number(userId));
 
     if (user) {
@@ -43,7 +43,19 @@ module.exports.deleteOneUser = (request, response, next) => {
     } else {
         response.status(404).end;
     }
+}
 
+  // Метод на оновлення інформації про якогось конкретного юзера
+
+  module.exports.updateUser = (request, response, next) => {
+    const { body, params: { userId } } = request;
+    const user = User.findOne(Number(userId));
+    if (user) {
+        const updatedUser = user.updateUser(body);
+        response.status(200).send(updatedUser)
+    } else {
+        response.status(404).end();
+    }
 
 
 }

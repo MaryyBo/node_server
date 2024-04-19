@@ -28,6 +28,10 @@ app.get('/user/:userId', UserController.getOneUser);
 
 app.delete ('/user/:userId', UserController.deleteOneUser);
 
+// Роут на оновлення конкретного користувача
+
+app.put('/user/:userId', bodyParser, UserController.updateUser)
+
 
 
 app.listen(PORT, () => {
